@@ -10,4 +10,9 @@ class CE extends Model
     use HasFactory;
 
     protected $table = 'ccee';
+
+    public function notas()
+    {
+        return $this->hasMany(Nota::class);
+    }
 }

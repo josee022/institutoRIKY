@@ -12,7 +12,9 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        return view('alumnos.index', [
+            'alumnos' => Alumno::all(),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumnos.create');
     }
 
     /**
@@ -28,7 +30,15 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|max:255',
+        ]);
+
+        $alumno = new Alumno();
+        $alumno->nombre = $validated['nombre'];
+        $alumno->save();
+        session()->flash('success', 'Alumno creado correctamente.');
+        return redirect()->route('alumnos.index');
     }
 
     /**
@@ -44,7 +54,9 @@ class AlumnoController extends Controller
      */
     public function edit(Alumno $alumno)
     {
-        //
+        return view('alumnos.edit', [
+            'alumno' => $alumno,
+        ]);
     }
 
     /**
@@ -52,7 +64,13 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, Alumno $alumno)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|max:255',
+        ]);
+        $alumno->nombre = $validated['nombre'];
+        $alumno->save();
+        session()->flash('success', 'Alumno cambiado correctamente.');
+        return redirect()->route('alumnos.index');
     }
 
     /**
@@ -60,6 +78,15 @@ class AlumnoController extends Controller
      */
     public function destroy(Alumno $alumno)
     {
-        //
+        $alumno->delete();
+        session()->flash('success', 'Alumno eliminado correctamente.');
+        return redirect()->route('alumnos.index');
+    }
+
+    public function criterios(Alumno $alumno)
+    {
+        return view('alumnos.criterios', [
+            'alumno' => $alumno,
+        ]);
     }
 }
