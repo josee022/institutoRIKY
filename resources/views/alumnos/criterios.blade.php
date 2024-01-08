@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($alumno->notas as $nota)
+                @foreach ($alumno->notas_por_criterios() as $nota)
                     <tr class="bg-white border-b">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ $nota->ccee->ce }}
